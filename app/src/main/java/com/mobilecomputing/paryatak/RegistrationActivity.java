@@ -146,7 +146,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         showProgressDialog("Registering..", "Please Wait");
 
-        UploadImageService uploadImageService = new UploadImageService();
+        UploadImageService uploadImageService = new UploadImageService(null);
         uploadImageService.uploadImage(bitmap, ext)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override

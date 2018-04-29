@@ -7,45 +7,59 @@ public class Post {
     String PostTime;
     String WhoPublishedIt;
     String PostContent;
-    String MediaType; // IMAGE OR VIDEO
-    String MediaURL;
+    String PostImageURL;
     String Upvotes;
     String Downvotes;
 
-    public Post(String Content, String MediaType, String MediaURL) {
+    public Post(String Content, String MediaType, String PostImageURl) {
         String Time = String.valueOf(System.currentTimeMillis());
         this.PostID = FirebaseAuth.getInstance().getCurrentUser().getUid() + Time;
         this.PostTime = Time;
         this.WhoPublishedIt = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.PostContent = Content;
-        this.MediaType = MediaType;
-        this.MediaURL = MediaURL;
+        this.PostImageURL =
         this.Upvotes = null;
         this.Downvotes = null;
+    }
+
+    public void setPostID(String postID) {
+        PostID = postID;
     }
 
     public String getPostID() {
         return PostID;
     }
 
+    public void setPostTime(String postTime) {
+        PostTime = postTime;
+    }
+
     public String getPostTime() {
         return PostTime;
+    }
+
+    public void setWhoPublishedIt(String whoPublishedIt) {
+        WhoPublishedIt = whoPublishedIt;
     }
 
     public String getWhoPublishedIt() {
         return WhoPublishedIt;
     }
 
+    public void setPostContent(String postContent) {
+        PostContent = postContent;
+    }
+
     public String getPostContent() {
         return PostContent;
     }
 
-    public String getMediaType() {
-        return MediaType;
+    public void setPostImageURL(String postImageURL) {
+        PostImageURL = postImageURL;
     }
 
-    public String getMediaURL() {
-        return MediaURL;
+    public String getPostImageURL() {
+        return PostImageURL;
     }
 
     public void setUpvotes(String upvotes) {

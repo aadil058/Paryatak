@@ -19,10 +19,14 @@ public class UploadImageService {
     private StorageReference storageRef;
     private StorageReference imageRef;
 
-    public UploadImageService() {
+    public UploadImageService(String ID) {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReferenceFromUrl("gs://travel-india-c2621.appspot.com");
-        imageRef = storageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg");
+
+        if(ID == null)
+            imageRef = storageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid() + ".jpg");
+        else
+            imageRef = storageRef.child(ID + ".jpg");
     }
 
     public UploadTask uploadImage(Bitmap bitmap, String ext) {
@@ -34,7 +38,7 @@ public class UploadImageService {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
 
         byte[] data = outputStream.toByteArray();
-        uploadTask = imageRef .putBytes(data);
+        uploadTask = imageRef.putBytes(data);
         return uploadTask;
     }
 }

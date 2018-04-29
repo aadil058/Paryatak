@@ -17,4 +17,9 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(HomeActivity.this, ForumActivity.class);
         startActivity(intent);
     }
+
+    public void GoToVlogs(View view) {
+        Intent intent = new Intent(HomeActivity.this, VLogsActivity.class);
+        startActivity(intent);
+    }
 }

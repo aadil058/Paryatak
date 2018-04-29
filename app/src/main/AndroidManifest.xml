@@ -37,7 +37,8 @@
             android:value="AIzaSyAUaQZnalUit_4e8ZSDZ8WUvA3F3lQxCjk" />
         <!-- android:value="AIzaSyCu0itULZ1JMR0KkvYGmG-T4obUtq5eT8Y" /> -->
 
-        <activity android:name=".ForumActivity"></activity>
+        <activity android:name=".ForumActivity" />
+        <activity android:name=".VLogsActivity"></activity>
     </application>
 
 </manifest>
