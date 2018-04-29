@@ -1,13 +1,10 @@
 package com.mobilecomputing.paryatak;
 
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.google.android.gms.games.quest.Quest;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,7 +81,8 @@ public class ForumActivity extends AppCompatActivity {
                         for (Map.Entry<String, QuestionModal> entry : questionsFiltered.entrySet()) {
                             if(first)
                                 // updateQuestion(entry.getKey(), entry.getValue());
-                                loadFakeAnswer(entry.getValue().getQuestionID());
+                                // loadFakeAnswer(entry.getValue().getQuestionID());
+                                getAnswers(entry.getValue().getQuestionID());
                             first = false;
                         }
                     }
@@ -112,7 +110,7 @@ public class ForumActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getApplicationContext(), "Error - Answer Test", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Success - Answer Test", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -121,6 +119,46 @@ public class ForumActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error - Answer Test", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    // Get All Answers For Given Question
+    public void getAnswers(final String QuestionID) {
+        FirestoreService firestoreService = FirestoreService.getInstance();
+        firestoreService.getAnswers(QuestionID)
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                        List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+                        Map<String, AnswerModal> answers = new HashMap<>();
+
+                        for(DocumentSnapshot snapshot : documents) {
+                            Map<String, Object> data = snapshot.getData();
+                            AnswerModal answer = AnswerModal.snapshotToAnswerModal(data);
+                            answers.put(snapshot.getId(), answer);
+                        }
+
+                        boolean first = true;
+                        for (Map.Entry<String, AnswerModal> entry : answers.entrySet()) {
+                            if(first)
+                                // Log.i("INFO ", entry.getValue().getAnswer());
+                                updateAnswer(entry.getKey(), entry.getValue());
+
+                            first = false;
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error - Answer GET Test", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    public void updateAnswer(String documentID, AnswerModal answer) {
+        answer.setUpvotes(String.valueOf(10));
+        FirestoreService firestoreService = FirestoreService.getInstance();
+        firestoreService.updateAnswer(answer, documentID);
     }
 
     public List<String> intersection(List<String> listA, List<String> listB) {

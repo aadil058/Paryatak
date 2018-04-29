@@ -107,6 +107,17 @@ public class FirestoreService {
                 .add(answer);
     }
 
+    public Task<QuerySnapshot> getAnswers(String QuestionID) {
+        return firebaseFirestore.collection("Answers")
+                .whereEqualTo("questionID", QuestionID)
+                .get();
+    }
+
+    public Task<Void> updateAnswer(AnswerModal answer, String documentID) {
+        return firebaseFirestore.collection("Answers")
+                .document(documentID)
+                .set(answer, SetOptions.merge());
+    }
 
     /*********************************/
     /***** Posts Related Methods *****/
