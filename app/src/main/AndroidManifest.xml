@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobilecomputing.paryatak">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -35,9 +34,13 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAUaQZnalUit_4e8ZSDZ8WUvA3F3lQxCjk"/>
-        <!--android:value="AIzaSyCu0itULZ1JMR0KkvYGmG-T4obUtq5eT8Y" />-->
+            android:value="AIzaSyAUaQZnalUit_4e8ZSDZ8WUvA3F3lQxCjk" />
+        <!-- android:value="AIzaSyCu0itULZ1JMR0KkvYGmG-T4obUtq5eT8Y" /> -->
 
+        <activity
+            android:name=".ForumActivity"
+            android:label="@string/title_activity_forum"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
