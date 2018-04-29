@@ -123,5 +123,12 @@ public class FirestoreService {
     /***** Posts Related Methods *****/
     /*********************************/
 
+    public Task<DocumentReference> PublishPost(Post post) {
+        CollectionReference Post = firebaseFirestore.collection("Post");
+        return Post.add(post);
+    }
 
+    // Get All POost
+
+    // Get Filter By Tags Post
 }

@@ -3,24 +3,25 @@ package com.mobilecomputing.paryatak;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Post {
-    String PostID;
-    String PostTime;
-    String WhoPublishedIt;
-    String PostContent;
-    String PostImageURL;
-    String Upvotes;
-    String Downvotes;
+    private String PostID;
+    private String PostTime;
+    private String WhoPublishedIt;
+    private String PostContent;
+    private String PostImageURL;
+    private String Upvotes;
+    private String Downvotes;
 
-    public Post(String Content, String MediaType, String PostImageURl) {
-        String Time = String.valueOf(System.currentTimeMillis());
-        this.PostID = FirebaseAuth.getInstance().getCurrentUser().getUid() + Time;
+    public Post(String PostID, String Time, String Content, String PostImageURl) {
+        this.PostID = PostID;
         this.PostTime = Time;
         this.WhoPublishedIt = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.PostContent = Content;
-        this.PostImageURL =
+        this.PostImageURL = PostImageURl;
         this.Upvotes = null;
         this.Downvotes = null;
     }
+
+    public Post() {}
 
     public void setPostID(String postID) {
         PostID = postID;
@@ -63,15 +64,15 @@ public class Post {
     }
 
     public void setUpvotes(String upvotes) {
-        Upvotes = upvotes;
+        this.Upvotes = upvotes;
     }
 
     public void setDownvotes(String downvotes) {
-        Downvotes = downvotes;
+        this.Downvotes = downvotes;
     }
 
     public String getDownvotes() {
-        return Downvotes;
+        return this.Downvotes;
     }
 
     public String getUpvotes() {

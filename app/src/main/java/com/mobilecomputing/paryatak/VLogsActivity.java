@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
@@ -58,13 +59,30 @@ public class VLogsActivity extends AppCompatActivity {
                     }
                 }
 
-                String PostID = FirebaseAuth.getInstance().getCurrentUser().getUid() + " " + System.currentTimeMillis();
+                final String Time = String.valueOf(System.currentTimeMillis());
+                final String PostID = FirebaseAuth.getInstance().getCurrentUser().getUid() + " " + Time;
                 UploadImageService uploadImageService = new UploadImageService(PostID);
                 uploadImageService.uploadImage(bitmap, ext)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Log.i("INFO ", String.valueOf(taskSnapshot.getDownloadUrl()));
+
+                                Post post = new Post(PostID, Time, "Content " + Time, taskSnapshot.getDownloadUrl().toString());
+                                FirestoreService firestoreService = FirestoreService.getInstance();
+                                firestoreService.PublishPost(post)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Toast.makeText(getApplicationContext(), "Published Successfully", Toast.LENGTH_LONG).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getApplicationContext(), "Not Published", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
