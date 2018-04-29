@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 public class FirestoreService {
 
@@ -82,6 +83,24 @@ public class FirestoreService {
     /***** Forum Related Methods *****/
     /*********************************/
 
+    // Add a new question
+    public Task<DocumentReference> AskQuestion(QuestionModal question) {
+        CollectionReference forum = firebaseFirestore.collection("Forum");
+        return forum.add(question);
+    }
+
+    // Get Questions Ordered By Time
+    public Task<QuerySnapshot> getQuestions() {
+        CollectionReference forum = firebaseFirestore.collection("Forum");
+        return forum.orderBy("questionTime").get();
+    }
+
+    // Update an existing question
+    public Task<Void> updateQuestion(QuestionModal question, String documentID) {
+        return firebaseFirestore.collection("Forum")
+                .document(documentID)
+                .set(question, SetOptions.merge());
+    }
 
 
     /*********************************/

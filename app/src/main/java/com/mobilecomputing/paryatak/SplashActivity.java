@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -124,7 +125,7 @@ public class SplashActivity extends AppCompatActivity {
 
                                             // Now, Proceed based on current user state.
                                             if(Boolean.valueOf(user.get("registered").toString()))
-                                                gotoSearch(user.get("name").toString());
+                                                gotoHome(user.get("name").toString());
                                             else
                                                 gotoRegistration("Welcome Back!!!");
                                         }
@@ -144,8 +145,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /*** SEARCH INTENT ***/
-    public void gotoSearch(String name) {
-        Intent intent = new Intent(SplashActivity.this, HomeActivity.class  );
+    public void gotoHome(String name) {
+        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+        Log.i("INFO ", "YES-");
         Toasty.success(getApplicationContext(), "Welcome back, " + name + "!", Toast.LENGTH_LONG, true).show();
         startActivity(intent);
     }

@@ -37,10 +37,7 @@
             android:value="AIzaSyAUaQZnalUit_4e8ZSDZ8WUvA3F3lQxCjk" />
         <!-- android:value="AIzaSyCu0itULZ1JMR0KkvYGmG-T4obUtq5eT8Y" /> -->
 
-        <activity
-            android:name=".ForumActivity"
-            android:label="@string/title_activity_forum"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ForumActivity"></activity>
     </application>
 
 </manifest>
