@@ -1,3 +1,81 @@
 <resources>
     <string name="app_name">Paryatak</string>
+
+    <string-array name="quotes">
+        <item>"To travel is to live"</item>
+        <item>"Live with no excuses and travel with no regrets"</item>
+        <item>"Let's find some beautiful place to get lost"</item>
+        <item>"Don't listen to what they say. Go see."</item>
+        <item>"Travel far enough you meet yourself"</item>
+        <item>Jobs fill your pocket. Adventures fill your soul."</item>
+        <item>"People forget years and remember moments"</item>
+        <item>"We travel not to escape life but for life not to escape us"</item>
+    </string-array>
+
+    <string name="email">Email Address</string>
+    <string name="password">Password (Min. 8 Characters)</string>
+
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
+
+    <string name="or">OR</string>
+
+    <string name="loginWithGoogle">Login with Google</string>
+    <string name="loginWithFacebook">Login with Facebook</string>
+
+    <string name="uploadProfilePic">Change Picture</string>
+
+    <string name="phone">Phone</string>
+
+    <string name="completeRegistration">Complete Registration</string>
+
+    <string name="facebook_app_id">152011438811462</string>
+
+    <string name="fb_login_protocol_scheme">fb152011438811462</string>
+
+    <string-array name="states_and_ut">
+        <item>Andaman and Nicobar Islands</item>
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chandigarh</item>
+        <item>Chhattisgarh</item>
+        <item>Dadra and Nagar Haveli</item>
+        <item>Daman and Diu</item>
+        <item>Delhi</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Lakshadweep</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Odisha</item>
+        <item>Pondicherry</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttar Pradesh</item>
+        <item>Uttarakhand</item>
+        <item>West Bengal</item>
+    </string-array>
+    <string name="title_activity_nav">NavActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="SearchHint">Type a place or state name</string>
+
 </resources>

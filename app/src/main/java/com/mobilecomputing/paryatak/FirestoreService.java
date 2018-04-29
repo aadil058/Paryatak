@@ -1,0 +1,90 @@
+/*
+ *
+ * FirestoreService is our app's way into firestore (firebase storage service).
+ *
+ */
+
+package com.mobilecomputing.paryatak;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+public class FirestoreService {
+
+    private static FirestoreService firestoreService = null;
+    private static FirebaseFirestore firebaseFirestore = null;
+    private static String userDocumentID = null;
+
+    private FirestoreService() {
+        firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    public static FirestoreService getInstance() {
+        if(firestoreService == null)
+            firestoreService = new FirestoreService();
+        return firestoreService;
+    }
+
+    // Reset FireStore Object
+    public static void reset() {
+        firestoreService = null;
+        firebaseFirestore = null;
+        setUserDocumentID(null);
+    }
+
+    /********************************/
+    /***** User Related Methods *****/
+    /********************************/
+
+    // Store User Object
+    public Task<DocumentReference> storeUser(UserModal user) {
+        return firebaseFirestore.collection("users").add(user);
+    }
+
+    // Get User Object
+    public Task<QuerySnapshot> getCurrentUser() {
+        CollectionReference users = firebaseFirestore.collection("users");
+        Query query = users.whereEqualTo("uid", FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        return query.get();
+    }
+
+    // Set Current User's Document ID
+    public static void setUserDocumentID(String id) {
+        userDocumentID = id;
+    }
+
+    // Get Current User's Document ID
+    public static String getUserDocumentID() {
+        return userDocumentID;
+    }
+
+    /**********************************/
+    /***** Places Related Methods *****/
+    /**********************************/
+
+    // Get the list of (All) Places
+    public Task<QuerySnapshot> getPlaces() {
+        return firebaseFirestore.collection("Places").get();
+    }
+
+    // Get All Places Within a City
+    public Task<DocumentSnapshot> getCityPlaces(String City) {
+        return firebaseFirestore.collection("Places").document(City).get();
+    }
+
+    /*********************************/
+    /***** Forum Related Methods *****/
+    /*********************************/
+
+
+
+    /*********************************/
+    /***** Posts Related Methods *****/
+    /*********************************/
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/customPrimaryLight">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/profilePic"
+        android:layout_marginTop="25dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/user"
+        app:civ_border_color="@color/customPrimary"
+        app:civ_border_width="5dp" />
+
+    <Button
+        android:id="@+id/uploadProfilePic"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="@string/uploadProfilePic"
+        android:drawableLeft="@drawable/upload"
+        android:drawablePadding="10dp"
+        android:onClick="pickAndUploadImage"/>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/username"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:background="@drawable/edittext_color"
+        android:hint="Username"
+        android:drawableLeft="@drawable/username"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:textColor="#5D5C5C"/>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/handle"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_color"
+        android:hint="\@handle"
+        android:padding="10dp"
+        android:textColor="#5D5C5C"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/countryCodePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ccp_countryPreference="in" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:background="@drawable/edittext_color"
+            android:hint="@string/phone"
+            android:padding="10dp"
+            android:textColor="#5D5C5C"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/complete"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="30dp"
+        android:textColor="#ffffff"
+        android:padding="10dp"
+        android:text="@string/completeRegistration"
+        android:onClick="Complete"/>
+
+</LinearLayout>
