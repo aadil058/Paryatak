@@ -102,6 +102,11 @@ public class FirestoreService {
                 .set(question, SetOptions.merge());
     }
 
+    public Task<DocumentReference> WriteAnswer(AnswerModal answer) {
+        return firebaseFirestore.collection("Answers")
+                .add(answer);
+    }
+
 
     /*********************************/
     /***** Posts Related Methods *****/

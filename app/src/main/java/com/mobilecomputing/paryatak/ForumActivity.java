@@ -11,6 +11,7 @@ import com.google.android.gms.games.quest.Quest;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,6 +37,7 @@ public class ForumActivity extends AppCompatActivity {
         getQuestionsOrderByTimeAndWhereTagsMatches(Tags);
     }
 
+    // LOAD FAKE DATA
     public void loadFakeDataForTestingBecauseUIisNotReady() {
         FirestoreService firestoreService = FirestoreService.getInstance();
 
@@ -58,6 +60,7 @@ public class ForumActivity extends AppCompatActivity {
         firestoreService.AskQuestion(question);
     }
 
+    // RUN GET QUESTIONS TEST ON FAKEDATA
     public void getQuestionsOrderByTimeAndWhereTagsMatches(final List<String> Tags) {
         final FirestoreService firestoreService = FirestoreService.getInstance();
         firestoreService.getQuestions()
@@ -80,7 +83,8 @@ public class ForumActivity extends AppCompatActivity {
                         boolean first = true;
                         for (Map.Entry<String, QuestionModal> entry : questionsFiltered.entrySet()) {
                             if(first)
-                                updateQuestion(entry.getKey(), entry.getValue());
+                                // updateQuestion(entry.getKey(), entry.getValue());
+                                loadFakeAnswer(entry.getValue().getQuestionID());
                             first = false;
                         }
                     }
@@ -93,10 +97,30 @@ public class ForumActivity extends AppCompatActivity {
                 });
     }
 
+    // UPDATE QUESTION TEST ON FAKE DATA
     public void updateQuestion(String key, QuestionModal question) {
         FirestoreService firestoreService = FirestoreService.getInstance();
         question.setUpvotes(String.valueOf(10));
         firestoreService.updateQuestion(question, key);
+    }
+
+    // Load Fake Answer Test
+    public void loadFakeAnswer(String QuestionID) {
+        AnswerModal answer = new AnswerModal(QuestionID, "Answer " + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        FirestoreService firestoreService = FirestoreService.getInstance();
+        firestoreService.WriteAnswer(answer)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Error - Answer Test", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error - Answer Test", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     public List<String> intersection(List<String> listA, List<String> listB) {

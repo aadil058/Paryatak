@@ -9,8 +9,9 @@ public class AnswerModal {
     private String Upvotes;
     private String Downvotes;
     private String AnswerTime;
+    private String Answer;
 
-    public AnswerModal(String QuestionID) {
+    public AnswerModal(String QuestionID, String Answer) {
         String Time = String.valueOf(System.currentTimeMillis());
         this.AnswerID = FirebaseAuth.getInstance().getCurrentUser().getUid() + Time;
         this.UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -18,6 +19,7 @@ public class AnswerModal {
         this.Upvotes = null;
         this.Downvotes = null;
         this.AnswerTime = Time;
+        this.Answer = Answer;
     }
 
     public String getAnswerID() {
@@ -50,5 +52,13 @@ public class AnswerModal {
 
     public String getAnswerTime() {
         return AnswerTime;
+    }
+
+    public void setAnswer(String answer) {
+        Answer = answer;
+    }
+
+    public String getAnswer() {
+        return Answer;
     }
 }
