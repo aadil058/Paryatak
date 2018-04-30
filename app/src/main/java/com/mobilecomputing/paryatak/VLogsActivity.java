@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
@@ -22,6 +24,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 public class VLogsActivity extends AppCompatActivity {
 
@@ -75,6 +82,7 @@ public class VLogsActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Toast.makeText(getApplicationContext(), "Published Successfully", Toast.LENGTH_LONG).show();
+                                                getAllPosts();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -96,5 +104,39 @@ public class VLogsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void getAllPosts() {
+        FirestoreService.getInstance().getPosts()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                        List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+                        Map<String, Post> posts = new HashMap<>();
+
+                        for(DocumentSnapshot snapshot : documents) {
+                            Map<String, Object> data = snapshot.getData();
+                            Post post = Post.snapshotToPost(data);
+                            posts.put(snapshot.getId(), post);
+                            // Log.i("INFO ", String.valueOf(question.getQuestionID()) + " " + question.getUpvotes());
+                        }
+
+                        boolean first = true;
+                        for (Map.Entry<String, Post> entry : posts.entrySet()) {
+                            // if(first)
+                            //    UpdatePost();
+                            // first = false;
+
+                            Log.i("INFO ", entry.getKey() + " " + entry.getValue().getPostID());
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toasty.error(getApplicationContext(), "Some error occurred while fetching posts.", Toast.LENGTH_LONG).show();
+
+                    }
+                });
     }
 }

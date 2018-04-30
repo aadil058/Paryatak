@@ -1,6 +1,9 @@
 package com.mobilecomputing.paryatak;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.Map;
 
 public class Post {
     private String PostID;
@@ -77,5 +80,17 @@ public class Post {
 
     public String getUpvotes() {
         return Upvotes;
+    }
+
+    public static Post snapshotToPost(Map<String, Object> snapshot) {
+        Post post = new Post();
+        if (snapshot.get("postID") != null) post.setPostID(snapshot.get("postID").toString());
+        if (snapshot.get("postTime") != null) post.setPostTime(snapshot.get("postTime") .toString());
+        if (snapshot.get("whoPublishedIt") != null) post.setWhoPublishedIt(snapshot.get("whoPublishedIt").toString());
+        if (snapshot.get("postContent") != null) post.setPostContent(snapshot.get("postContent").toString());
+        if (snapshot.get("downvotes") != null) post.setDownvotes(snapshot.get("downvotes").toString());
+        if (snapshot.get("postImageURL") != null) post.setPostImageURL(snapshot.get("postImageURL").toString());
+        if (snapshot.get("upvotes") != null) post.setUpvotes(snapshot.get("upvotes").toString());
+        return post;
     }
 }

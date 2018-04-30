@@ -102,17 +102,20 @@ public class FirestoreService {
                 .set(question, SetOptions.merge());
     }
 
+    // Write New Answer
     public Task<DocumentReference> WriteAnswer(AnswerModal answer) {
         return firebaseFirestore.collection("Answers")
                 .add(answer);
     }
 
+    // Get All Answers For A Given Question ID
     public Task<QuerySnapshot> getAnswers(String QuestionID) {
         return firebaseFirestore.collection("Answers")
                 .whereEqualTo("questionID", QuestionID)
                 .get();
     }
 
+    // Update a given answer
     public Task<Void> updateAnswer(AnswerModal answer, String documentID) {
         return firebaseFirestore.collection("Answers")
                 .document(documentID)
@@ -123,12 +126,20 @@ public class FirestoreService {
     /***** Posts Related Methods *****/
     /*********************************/
 
+    // Publish a New Post
     public Task<DocumentReference> PublishPost(Post post) {
         CollectionReference Post = firebaseFirestore.collection("Post");
         return Post.add(post);
     }
 
-    // Get All POost
+    // Get All Post
+    public Task<QuerySnapshot> getPosts() {
+        CollectionReference Post = firebaseFirestore.collection("Post");
+        return Post.orderBy("postTime").get();
+    }
+
 
     // Get Filter By Tags Post
+
+    // Update a Given Post
 }
