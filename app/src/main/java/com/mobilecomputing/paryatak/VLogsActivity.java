@@ -24,6 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,8 @@ public class VLogsActivity extends AppCompatActivity {
                     }
                 }
 
+                final List<String> Tags = new ArrayList<>();
+                Tags.add("Taj Mahal");
                 final String Time = String.valueOf(System.currentTimeMillis());
                 final String PostID = FirebaseAuth.getInstance().getCurrentUser().getUid() + " " + Time;
                 UploadImageService uploadImageService = new UploadImageService(PostID);
@@ -75,7 +78,7 @@ public class VLogsActivity extends AppCompatActivity {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Log.i("INFO ", String.valueOf(taskSnapshot.getDownloadUrl()));
 
-                                Post post = new Post(PostID, Time, "Content " + Time, taskSnapshot.getDownloadUrl().toString());
+                                Post post = new Post(PostID, Time, "Content " + Time, taskSnapshot.getDownloadUrl().toString(), Tags);
                                 FirestoreService firestoreService = FirestoreService.getInstance();
                                 firestoreService.PublishPost(post)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -123,11 +126,44 @@ public class VLogsActivity extends AppCompatActivity {
 
                         boolean first = true;
                         for (Map.Entry<String, Post> entry : posts.entrySet()) {
-                            // if(first)
-                            //    UpdatePost();
-                            // first = false;
-
                             Log.i("INFO ", entry.getKey() + " " + entry.getValue().getPostID());
+                        }
+
+                        final List<String> Tags = new ArrayList<>();
+                        Tags.add("Taj Mahal");
+                        getAllPostsByTags(Tags);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toasty.error(getApplicationContext(), "Some error occurred while fetching posts.", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+    }
+
+    public void getAllPostsByTags(final List<String> Tags) {
+        FirestoreService.getInstance().getPosts()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                      List<DocumentSnapshot> documents = documentSnapshots.getDocuments();
+                        Map<String, Post> postsFiltered = new HashMap<>();
+
+                        for(DocumentSnapshot snapshot : documents) {
+                            Map<String, Object> data = snapshot.getData();
+                            Post post = Post.snapshotToPost(data);
+                            // Log.i("INFO ", String.valueOf(question.getQuestionID()) + " " + question.getUpvotes());
+
+                            Log.i("INFO ", String.valueOf(post.getTags().size()));
+
+                            if(intersection(post.getTags(), Tags).size() > 0)
+                                postsFiltered.put(snapshot.getId(), post);
+                        }
+
+                        for (Map.Entry<String, Post> entry : postsFiltered.entrySet()) {
+                            Log.i("INFO Tags ", entry.getKey() + " " + entry.getValue().getPostID());
                         }
                     }
                 })
@@ -138,5 +174,20 @@ public class VLogsActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    public List<String> intersection(List<String> listA, List<String> listB) {
+        List<String> list = new ArrayList<String>();
+
+        try {
+            for (String string : listA) {
+                if (listB.contains(string))
+                    list.add(string);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

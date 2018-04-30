@@ -138,8 +138,5 @@ public class FirestoreService {
         return Post.orderBy("postTime").get();
     }
 
-
-    // Get Filter By Tags Post
-
     // Update a Given Post
 }

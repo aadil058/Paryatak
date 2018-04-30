@@ -3,6 +3,7 @@ package com.mobilecomputing.paryatak;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.List;
 import java.util.Map;
 
 public class Post {
@@ -13,8 +14,9 @@ public class Post {
     private String PostImageURL;
     private String Upvotes;
     private String Downvotes;
+    private List<String> Tags;
 
-    public Post(String PostID, String Time, String Content, String PostImageURl) {
+    public Post(String PostID, String Time, String Content, String PostImageURl, List<String> Tags) {
         this.PostID = PostID;
         this.PostTime = Time;
         this.WhoPublishedIt = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -22,6 +24,7 @@ public class Post {
         this.PostImageURL = PostImageURl;
         this.Upvotes = null;
         this.Downvotes = null;
+        this.Tags = Tags;
     }
 
     public Post() {}
@@ -82,6 +85,14 @@ public class Post {
         return Upvotes;
     }
 
+    public void setTags(List<String> tags) {
+        Tags = tags;
+    }
+
+    public List<String> getTags() {
+        return Tags;
+    }
+
     public static Post snapshotToPost(Map<String, Object> snapshot) {
         Post post = new Post();
         if (snapshot.get("postID") != null) post.setPostID(snapshot.get("postID").toString());
@@ -91,6 +102,7 @@ public class Post {
         if (snapshot.get("downvotes") != null) post.setDownvotes(snapshot.get("downvotes").toString());
         if (snapshot.get("postImageURL") != null) post.setPostImageURL(snapshot.get("postImageURL").toString());
         if (snapshot.get("upvotes") != null) post.setUpvotes(snapshot.get("upvotes").toString());
+        if (snapshot.get("tags") != null) post.setTags((List<String>) snapshot.get("tags"));
         return post;
     }
 }
