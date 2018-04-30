@@ -124,6 +124,7 @@ public class VLogsActivity extends AppCompatActivity {
                             // Log.i("INFO ", String.valueOf(question.getQuestionID()) + " " + question.getUpvotes());
                         }
 
+                        // TEMP CODE FOR TESTING
                         boolean first = true;
                         for (Map.Entry<String, Post> entry : posts.entrySet()) {
                             Log.i("INFO ", entry.getKey() + " " + entry.getValue().getPostID());
@@ -162,9 +163,9 @@ public class VLogsActivity extends AppCompatActivity {
                                 postsFiltered.put(snapshot.getId(), post);
                         }
 
+                        // TEMP CODE FOR TESTING
                         for (Map.Entry<String, Post> entry : postsFiltered.entrySet()) {
                             Log.i("INFO Tags ", entry.getKey() + " " + entry.getValue().getPostID());
-
                             Post post = entry.getValue();
                             post.setUpvotes(String.valueOf(100));
                             updatePost(entry.getKey(), post);

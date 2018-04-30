@@ -27,10 +27,10 @@ public class ForumActivity extends AppCompatActivity {
 
         // loadFakeDataForTestingBecauseUIisNotReady();
 
-        List<String> Tags = new ArrayList<>();
-        Tags.add("Taj Mahal");
-        Tags.add("Agra Fort");
-        getQuestionsOrderByTimeAndWhereTagsMatches(Tags);
+        // List<String> Tags = new ArrayList<>();
+        // Tags.add("Taj Mahal");
+        // Tags.add("Agra Fort");
+        // getQuestionsOrderByTimeAndWhereTagsMatches(Tags);
     }
 
     // LOAD FAKE DATA
@@ -76,6 +76,10 @@ public class ForumActivity extends AppCompatActivity {
                                 questionsFiltered.put(snapshot.getId(), question);
                         }
 
+                        // questionsFiltered is now ready.
+                        // Key will be used when question updates and Value is question object itself.
+
+                        // TEMP CODE FOR TESTING
                         boolean first = true;
                         for (Map.Entry<String, QuestionModal> entry : questionsFiltered.entrySet()) {
                             if(first)
@@ -136,6 +140,7 @@ public class ForumActivity extends AppCompatActivity {
                             answers.put(snapshot.getId(), answer);
                         }
 
+                        // TEMP CODE FOR TESTING
                         boolean first = true;
                         for (Map.Entry<String, AnswerModal> entry : answers.entrySet()) {
                             if(first)
