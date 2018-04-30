@@ -139,4 +139,9 @@ public class FirestoreService {
     }
 
     // Update a Given Post
+    public Task<Void> updatePost(String DocumentID, Post post) {
+        return firebaseFirestore.collection("Post")
+                .document(DocumentID)
+                .set(post, SetOptions.merge());
+    }
 }

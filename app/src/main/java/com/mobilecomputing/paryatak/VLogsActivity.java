@@ -164,6 +164,10 @@ public class VLogsActivity extends AppCompatActivity {
 
                         for (Map.Entry<String, Post> entry : postsFiltered.entrySet()) {
                             Log.i("INFO Tags ", entry.getKey() + " " + entry.getValue().getPostID());
+
+                            Post post = entry.getValue();
+                            post.setUpvotes(String.valueOf(100));
+                            updatePost(entry.getKey(), post);
                         }
                     }
                 })
@@ -171,7 +175,6 @@ public class VLogsActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toasty.error(getApplicationContext(), "Some error occurred while fetching posts.", Toast.LENGTH_LONG).show();
-
                     }
                 });
     }
@@ -189,5 +192,21 @@ public class VLogsActivity extends AppCompatActivity {
         }
 
         return list;
+    }
+
+    public void updatePost(String DocumentID, Post post) {
+        FirestoreService.getInstance().updatePost(DocumentID, post)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i("INFO ", "Successfully updated");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toasty.error(getApplicationContext(), "Some error occurred while updating post.", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
